@@ -1,5 +1,7 @@
-#post-body {
+#post-body {}
 
+#preview {
+    
 }
 
 .post-links {
@@ -14,4 +16,8 @@
     background:#dfd;
     padding:0 1em;
     z-index:1;
+}
+
+textarea {
+    width:100%;
 }

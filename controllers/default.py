@@ -1,6 +1,23 @@
 # -*- coding: utf-8 -*-
 
 @auth.requires_login()
+def preview():
+
+    page = request.vars.mcms_body
+    render = request.vars.mcms_render
+
+    if render == '1':
+        rendered_page = MARKMIN(page)
+    elif render == '2':
+        rendered_page = XML(page, sanitize=True)
+
+    response.flash = 'Previsualización cargada'
+
+    return DIV(rendered_page)
+
+
+
+@auth.requires_login()
 def index():
     '''
     Recibe como request.args(0) el slug de algún artículo.
@@ -46,6 +63,10 @@ def edit():
                    showid=False,
                    deletable=True,
     )
+
+    #form[0].insert(4,TR(TD(),TD(LOAD(f='markmindocs'))))
+
+    form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' onclick='ajax("%s", ["mcms_body","mcms_render"],"preview");'>Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
     
     if form.process().accepted:
 
@@ -108,7 +129,7 @@ def admin(): return {'menu':UL([A(t, _href=URL(args=t)) for t in db.tables]),'ad
 
 def markmindocs():
     return IFRAME(_src="http://www.web2py.com/examples/static/markmin.html",
-                  _class="row-fluid well well-large", _height="450px")
+                  _class="row-fluid well well-small", _height="350px")
 
 
 def user():

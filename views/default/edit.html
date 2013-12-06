@@ -5,6 +5,17 @@ _class='btn', _href=URL(f='index', args=page.mcms_slug))}}
 
 <h2 align="left">Editando {{=page.mcms_title.title()}}</h2>
 
+<div class="well">
 {{=form}}
+</div>
 
-{{=LOAD(f='markmindocs')}}
+<button class="btn btn-mini btn-danger" onclick="$('#markmin-syntax').slideToggle();">Ayuda Sintaxis Markmin</button>
+<div id="markmin-syntax" style="display:none;">
+
+<table><tbody><tr class="first"><td><strong>SOURCE</strong></td><td><strong>OUTPUT</strong></td></tr><tr class="even"><td><code># title</code></td><td><strong>title</strong></td></tr><tr><td><code>## section</code></td><td><strong>section</strong></td></tr><tr class="even"><td><code>### subsection</code></td><td><strong>subsection</strong></td></tr><tr><td><code>**bold**</code></td><td><strong>bold</strong></td></tr><tr class="even"><td><code>''italic''</code></td><td><em>italic</em></td></tr><tr><td><code>``verbatim``</code></td><td><code>verbatim</code></td></tr><tr class="even"><td><code>http://google.com</code></td><td><a href="http://google.com">http://google.com</a></td></tr><tr><td><code>http://...</code></td><td><code>&lt;a href="http://..."&gt;http:...&lt;/a&gt;</code></td></tr><tr class="even"><td><code>http://...png</code></td><td><code>&lt;img src="http://...png" /&gt;</code></td></tr><tr><td><code>http://...mp3</code></td><td><code>&lt;audio src="http://...mp3"&gt;&lt;/audio&gt;</code></td></tr><tr class="even"><td><code>http://...mp4</code></td><td><code>&lt;video src="http://...mp4"&gt;&lt;/video&gt;</code></td></tr><tr><td><code>qr:http://...</code></td><td><code>&lt;a href="http://..."&gt;&lt;img src="qr code"/&gt;&lt;/a&gt;</code></td></tr><tr class="even"><td><code>embed:http://...</code></td><td><code>&lt;iframe src="http://..."&gt;&lt;/iframe&gt;</code></td></tr><tr><td><code>[[click me #myanchor]]</code></td><td><a href="#markmin_myanchor">click me</a></td></tr><tr class="even"><td><code>$</code><code>$\int_a^b sin(x)dx$</code><code>$</code></td><td><img src="http://chart.apis.google.com/chart?cht=tx&amp;chl=\int_a^b sin(x)dx"></td></tr></tbody></table>
+
+Más opciones en: {{=MARKMIN('http://www.web2py.com/examples/static/markmin.html')}} {{=MARKMIN('http://web2py.com/books/default/chapter/29/05/the-views#Built-in-helpers')}}
+
+</div>
+
+<div id="preview"></div>

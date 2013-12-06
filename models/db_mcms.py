@@ -37,6 +37,8 @@ dt('mcms_page',
    format=lambda r: '%s (%s)' % (r.mcms_title, 'markmin' if r.mcms_render == 1 else 'html')
 )
 
+db.mcms_page._enable_record_versioning()
+
 dt('mcms_tag',
    Field('mcms_page', 'reference mcms_page'),
    Field('page_tag', 'list:string')

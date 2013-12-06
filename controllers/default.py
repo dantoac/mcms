@@ -51,7 +51,7 @@ def edit():
 
         slug = IS_SLUG.urlify(form.vars.mcms_title)
         
-        redirect(URL(f='view',args=slug))
+        redirect(URL(f='index',args=slug))
     
     return locals()
 

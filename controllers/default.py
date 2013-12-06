@@ -29,7 +29,7 @@ def callback():
     query = db.mcms_page.mcms_slug.contains(keyword)
     pages = db(query).select(orderby=db.mcms_page.mcms_title,
                              cacheable=True)
-    links = [A(p.mcms_title, _href=URL('index.html',args=p.mcms_slug)) for p in pages] or [A(STRONG('Crear Artículo: '),keyword, callback=URL(f='new', vars={'title':keyword}), target='page')]
+    links = [A(p.mcms_title, _href=URL('index.html',args=p.mcms_slug)) for p in pages] or [A(STRONG('Crear Artículo: '),keyword, _href=URL(f='new.html', vars={'title':keyword}))]
     return UL(*links)
 
 

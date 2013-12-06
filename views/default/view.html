@@ -7,13 +7,13 @@ _class='btn', _href=URL(f='index', args=request.args))}}
 
 {{end}}
 
-
+<div class="hero-unit">
 <h1 align="center">
   {{=title.title()}}
-  <br />
-  <small>{{=excerpt}}</small>
 </h1>
-<hr />
+  <p>{{=excerpt}}</p>
+
+</div>
 
 {{for d in dataset:}}
 

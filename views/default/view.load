@@ -1,0 +1,20 @@
+<h2 align="center">
+  {{=title}}
+  <br />
+  <small>{{=excerpt}}</small>
+</h2>
+<hr />
+
+{{for d in dataset:}}
+
+<div class="post-links">
+  {{=A('editar', callback=URL(f='edit',args=d.id), target=request.cid,
+  _class='btn btn-danger btn-mini')}}
+
+</div>
+
+<div id="page-body">
+  {{=XML(d.mcms_html)}}
+</div>
+
+{{pass}}

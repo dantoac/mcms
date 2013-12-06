@@ -1,0 +1,17 @@
+#post-body {
+
+}
+
+.post-links {
+    text-align:right;
+}
+
+#search-result {
+    clear:both;
+    position:absolute;
+    left:8em;
+    top:3em;
+    background:#dfd;
+    padding:0 1em;
+    z-index:1;
+}

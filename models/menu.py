@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('NIM',SPAN('.IO')),
-                  _class="brand",_href="http://www.nim.io/")
+                  _class="brand",_href="http://mcms.nim.io/")
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 

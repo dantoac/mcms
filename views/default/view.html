@@ -1,4 +1,13 @@
 {{extend 'layout.html'}}
+
+
+{{block navbar}}
+{{=A(TAG.i(_class='icon icon-arrow-left'),' Volver',
+_class='btn', _href=URL(f='index', args=request.args))}}
+
+{{end}}
+
+
 <h2 align="center">
   {{=title}}
   <br />
@@ -9,9 +18,7 @@
 {{for d in dataset:}}
 
 <div class="post-links">
-  {{=A('editar', callback=URL(f='edit',args=d.id), target=request.cid,
-  _class='btn btn-danger btn-mini')}}
-
+  Actualizado: {{=prettydate(d.modified_on, T)}}
 </div>
 
 <div id="page-body">

@@ -73,9 +73,7 @@ def new():
 
 
 def view():
-    if request.extension != 'html': 
-        if not auth.is_logged_in(): raise HTTP(403)
-
+    
     page_title = request.args(0) or 'portada'
 
     page_slug = IS_SLUG.urlify(page_title)
@@ -86,6 +84,11 @@ def view():
     if not dataset: 
         redirect(URL(f='new.html',vars={'title':str(page_title)}),
                  client_side=True)
+
+    if not auth.is_logged_in():
+        if request.extension == 'html'\
+           and not dataset.first()['mcms_page.mcms_public']: 
+            raise HTTP(404)
 
 
     tags = db((db.mcms_page.mcms_slug == page_slug)

@@ -8,11 +8,11 @@ _class='btn', _href=URL(f='index', args=request.args))}}
 {{end}}
 
 
-<h2 align="center">
-  {{=title}}
+<h1 align="center">
+  {{=title.title()}}
   <br />
   <small>{{=excerpt}}</small>
-</h2>
+</h1>
 <hr />
 
 {{for d in dataset:}}

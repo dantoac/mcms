@@ -8,7 +8,7 @@
 {{for d in dataset:}}
 
 <div class="post-links">
-  {{=A('editar', callback=URL(f='edit',args=d.id), target=request.cid,
+  {{=A('editar', _href=URL(f='edit.html',args=d.id), target=request.cid,
   _class='btn btn-danger btn-mini')}}
 
 </div>

@@ -2,17 +2,17 @@
 
 
 {{block navbar}}
+{{if auth.is_logged_in():}}
 {{=A(TAG.i(_class='icon icon-arrow-left'),' Volver',
 _class='btn', _href=URL(f='index', args=request.args))}}
-
+{{pass}}
 {{end}}
 
 <div class="hero-unit">
-<h1 align="center">
-  {{=title.title()}}
-</h1>
+  <h1 align="center">
+    {{=title.title()}}
+  </h1>
   <p>{{=excerpt}}</p>
-
 </div>
 
 {{for d in dataset:}}

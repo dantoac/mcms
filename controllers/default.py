@@ -71,8 +71,11 @@ def new():
     return {'form':form}
 
 
-@auth.requires_login()
+
 def view():
+    if request.extension != 'html': 
+        if not auth.is_logged_in(): raise HTTP(403)
+
     page_title = request.args(0) or 'portada'
 
     page_slug = IS_SLUG.urlify(page_title)

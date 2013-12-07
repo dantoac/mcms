@@ -73,7 +73,6 @@ def edit():
                    deletable=True,
     )
 
-    #form[0].insert(4,TR(TD(),TD(LOAD(f='markmindocs'))))
 
     form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' 
     onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
@@ -93,6 +92,12 @@ def new():
     db.mcms_page.mcms_title.default = request.vars.title
 
     form = SQLFORM(db.mcms_page)
+
+    
+    form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' 
+    onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
+    Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
+
 
     if form.process().accepted:
 

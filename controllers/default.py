@@ -3,17 +3,23 @@
 @auth.requires_login()
 def preview():
 
+    title = request.vars.mcms_title
+    excerpt = request.vars.mcms_excerpt
     page = request.vars.mcms_body
     render = request.vars.mcms_render
+
+
+    header = DIV(H1(title.title(), _class='center'),
+                 TAG.p(excerpt), _class='hero-unit')
 
     if render == '1':
         rendered_page = MARKMIN(page)
     elif render == '2':
         rendered_page = XML(page, sanitize=True)
 
-    response.flash = 'Previsualización cargada'
+    response.flash = 'Previsualizando edición. Cambios sin guardar.'
 
-    return DIV(rendered_page)
+    return DIV(header,rendered_page)
 
 
 
@@ -46,7 +52,10 @@ def callback():
     query = db.mcms_page.mcms_slug.contains(keyword)
     pages = db(query).select(orderby=db.mcms_page.mcms_title,
                              cacheable=True)
-    links = [A(p.mcms_title, _href=URL('index.html',args=p.mcms_slug)) for p in pages] or [A(STRONG('Crear Artículo: '),keyword, _href=URL(f='new.html', vars={'title':keyword}))]
+    links = [A(p.mcms_title, _href=URL('index.html',args=p.mcms_slug)) 
+             for p in pages] or [A(STRONG('Crear Artículo: '),
+                                   keyword, _href=URL(f='new.html', 
+                                                      vars={'title':keyword}))]
     return UL(*links)
 
 
@@ -66,7 +75,9 @@ def edit():
 
     #form[0].insert(4,TR(TD(),TD(LOAD(f='markmindocs'))))
 
-    form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' onclick='ajax("%s", ["mcms_body","mcms_render"],"preview");'>Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
+    form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' 
+    onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
+    Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
     
     if form.process().accepted:
 

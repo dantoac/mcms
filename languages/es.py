@@ -379,6 +379,7 @@
 'site': 'sitio',
 'Size of cache:': 'Tamaño de la Caché:',
 'Slug': 'Slug',
+'Solicitar reinicio de contraseña': 'Solicitar reinicio de contraseña',
 'some files could not be removed': 'algunos archivos no pudieron ser removidos',
 'starts with': 'starts with',
 'state': 'estado',

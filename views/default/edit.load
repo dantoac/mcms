@@ -2,7 +2,7 @@
 _class='btn', callback=URL(f='view', args=page.mcms_slug),
 target=request.cid)}}
 
-<h2 align="left">Editando {{=page.mcms_title.title()}}</h2>
+<h2 align="left">Editando {{=page.mcms_title}}</h2>
 
 {{=form}}
 

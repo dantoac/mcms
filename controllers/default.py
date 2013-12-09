@@ -1,17 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-def blog():
-    
-    if auth.is_logged_in():
-        query = (db.mcms_page.id>0)
-    else:
-        query = (db.mcms_page.mcms_public == True)
-
-    dataset = db(query).select(orderby=~db.mcms_page.created_on)
-
-    return {'dataset':dataset}
-
 @auth.requires_login()
 def preview():
 
@@ -35,7 +24,6 @@ def preview():
 
 
 
-@auth.requires_login()
 def index():
     '''
     Recibe como request.args(0) el slug de algún artículo.
@@ -43,7 +31,20 @@ def index():
     Si el artícuo no existe, permite crearlo.
     '''
     r = request.vars.keys()
-    portada = LOAD(f='view.load', args=request.args(0) or r, ajax=True)
+
+    dataset = None
+    page = None
+    if request.args(0) or r:
+        page = LOAD(f='view.load', args=request.args(0) or r, ajax=True)
+    else:
+            
+        if auth.is_logged_in():
+            query = (db.mcms_page.id>0)
+        else:
+            query = (db.mcms_page.mcms_public == True)
+
+        dataset = db(query).select(orderby=~db.mcms_page.created_on)
+
     return locals()
 
 
@@ -52,7 +53,8 @@ def search():
         INPUT(_id='keyword',_name='keyword', _class='search-query',
               _placeholder='Buscar Artículo', _type='text',
               _onkeyup="ajax('%s', ['keyword'], 'search-result');" \
-               % URL(f='callback.load')),
+               % URL(f='callback.load'),
+              _tabindex=1),
         _class='navbar-search pull-left'),
                 search_result=DIV(_id='search-result', 
                                   _class='pull-left'))

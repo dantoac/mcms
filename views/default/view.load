@@ -2,23 +2,21 @@
   <h1 align="center">
     {{=title}}
   </h1>
-  <p>{{=excerpt}}</p>
+  <p class="lead">{{=excerpt}}</p>
 </div>
 {{for d in dataset:}}
 
 <div class="post-links">
 
   <div class="text-left">
-   
+    
     Actualizado {{=prettydate(d.modified_on)}}
 
   </div>
 
   
-  <div class="text-right">
-     {{=A('Editar', _href=URL(f='edit.html',args=d.id), target=request.cid,
-    _class='btn btn-danger btn-mini')}}
-
+  <div class="text-left">
+    
     {{if d.mcms_public:}}
     <span class="label label-success">Público</span>
 
@@ -32,6 +30,12 @@
     {{pass}}
     
   </div>
+
+
+  <div class="text-right">{{=A('Editar', _href=URL(f='edit.html',args=d.id), target=request.cid,
+    _class='btn btn-danger btn-mini')}}
+  </div>
+
 
 </div>
 

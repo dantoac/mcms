@@ -1,17 +1,15 @@
 {{extend 'layout.html'}}
 
-{{block navbar}}
-{{if auth.is_logged_in():}}
+{{block navbar}}{{end}}
+
 {{=A(TAG.i(_class='icon icon-arrow-left'),' Volver',
-_class='btn', _href=URL(f='index', args=request.args))}}
-{{pass}}
-{{end}}
+_class='btn', _href=URL(f='blog', anchor=request.args(0)))}}
 
 <div class="hero-unit">
   <h1 align="center">
     {{=title}}
   </h1>
-  <p>{{=excerpt}}</p>
+  <p class="lead">{{=excerpt}}</p>
 </div>
 
 {{for d in dataset:}}

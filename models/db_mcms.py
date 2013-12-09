@@ -12,9 +12,9 @@ extras={'code_cpp':lambda text: CODE(text,language='cpp').xml(),
 
 
 
-def recortatexto(texto=None,limite=24):
+def recorta_texto(texto=None,limite=24):
     if not isinstance(texto, str): return texto
-    return texto[:limite]+'(...)' if len(texto)>limite else texto
+    return texto[:limite]+'...' if len(texto)>limite else texto
 
 from uuid import uuid4
 

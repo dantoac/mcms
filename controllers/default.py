@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
 
+
+def blog():
+    
+    if auth.is_logged_in():
+        query = (db.mcms_page.id>0)
+    else:
+        query = (db.mcms_page.mcms_public == True)
+
+    dataset = db(query).select(orderby=~db.mcms_page.created_on)
+
+    return {'dataset':dataset}
+
 @auth.requires_login()
 def preview():
 
@@ -49,7 +61,7 @@ def search():
 def callback():
     if not request.vars.keyword: return ''
     keyword = request.vars.keyword
-    query = db.mcms_page.mcms_slug.contains(keyword)
+    query = db.mcms_page.mcms_slug.startswith(keyword)
     pages = db(query).select(orderby=db.mcms_page.mcms_title,
                              cacheable=True)
     links = [A(p.mcms_title, _href=URL('index.html',args=p.mcms_slug)) 
@@ -142,10 +154,6 @@ def view():
 @auth.requires_login()
 def admin(): return {'menu':UL([A(t, _href=URL(args=t)) for t in db.tables]),'admin':SQLFORM.smartgrid(db[request.args(0) or 'auth_user'], user_signature=False)}
 
-
-def markmindocs():
-    return IFRAME(_src="http://www.web2py.com/examples/static/markmin.html",
-                  _class="row-fluid well well-small", _height="350px")
 
 
 def user():

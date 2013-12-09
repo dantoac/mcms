@@ -21,3 +21,16 @@
 textarea {
     width:100%;
 }
+
+.blog-post {
+    margin-bottom:4em;
+}
+
+#blog-header {
+    text-align:center;
+    /*background: #fff url(http://blog.nim.io/download/post.image.9e177a7355059119.6861636b65726d617474657230312d32303133303632302e6a7067.jpg) center;
+    width:1170px;
+    height:357px;
+    min-height:179px;*/
+    margin:auto;
+}

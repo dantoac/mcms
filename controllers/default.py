@@ -124,13 +124,22 @@ def new():
 
 
 def view():
-    
-    page_title = request.args(0) or 'portada'
+    '''
+    Permite VER las páginas ofreciendo una vista (vista.html) especial
+    para el usuario anónimo y otra (vista.load) para el usuario
+    autenticado.
+    '''
 
-    page_slug = IS_SLUG.urlify(page_title)
+    page = request.args(0)
 
-    dataset = db((db.mcms_page.mcms_slug == page_slug)
-             ).select(db.mcms_page.ALL)
+    try:
+        query = (db.mcms_page.id == int(page))
+    except:
+        page_slug = IS_SLUG.urlify(page)
+        query = (db.mcms_page.mcms_slug == page_slug)
+
+    dataset = db(query
+             ).select(db.mcms_page.ALL, cacheable=True)
 
     if not dataset: 
         redirect(URL(f='new.html',vars={'title':str(page_title)}),
@@ -142,13 +151,13 @@ def view():
             raise HTTP(404)
 
 
-    tags = db((db.mcms_page.mcms_slug == page_slug)
-              & (db.mcms_page.id == db.mcms_tag.mcms_page)
-              ).select(db.mcms_tag.page_tag)
+    tags = db((query)& (db.mcms_page.id == db.mcms_tag.mcms_page)
+          ).select(db.mcms_tag.page_tag)
 
     title = dataset.first()['mcms_page.mcms_title']
     excerpt = dataset.first()['mcms_page.mcms_excerpt']
-
+    slug = dataset.first()['mcms_page.mcms_slug']
+    id = dataset.first()['mcms_page.id']
     response.title = title
     
     return locals()

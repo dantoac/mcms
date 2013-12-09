@@ -2,8 +2,13 @@
 
 {{block navbar}}{{end}}
 
-{{=A(TAG.i(_class='icon icon-arrow-left'),' Volver',
-_class='btn', _href=URL(f='index', anchor=request.args(0)))}}
+{{=A(TAG.i(_class='icon icon-arrow-left'),' Índice',
+_class='btn btn-small', _href=URL(f='index', anchor=slug))}}
+
+<a class="pull-right btn btn-small" href="{{=URL(args=id)}}">
+  <i class="icon-eye-open"></i>
+  Permalink
+</a>
 
 <div class="hero-unit">
   <h1 align="center">

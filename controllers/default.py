@@ -153,10 +153,6 @@ def view():
     
     return locals()
 
-@auth.requires_login()
-def admin(): return {'menu':UL([A(t, _href=URL(args=t)) for t in db.tables]),'admin':SQLFORM.smartgrid(db[request.args(0) or 'auth_user'], user_signature=False)}
-
-
 
 def user():
     """

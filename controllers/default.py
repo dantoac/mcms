@@ -145,11 +145,8 @@ def view():
         redirect(URL(f='new.html',vars={'title':str(page_title)}),
                  client_side=True)
 
-    if not auth.is_logged_in():
-        if request.extension == 'html'\
-           and not dataset.first()['mcms_page.mcms_public']: 
-            raise HTTP(404)
-
+    if not auth.is_logged_in() and not dataset.first()['mcms_page.mcms_public']: 
+        raise HTTP(404)
 
     tags = db((query)& (db.mcms_page.id == db.mcms_tag.mcms_page)
           ).select(db.mcms_tag.page_tag)

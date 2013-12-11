@@ -1,7 +1,5 @@
 # coding: utf8
 
-#auth.wiki(resolve=False)
-
 auth.settings.create_user_groups = None
 
 
@@ -11,22 +9,33 @@ extras={'code_cpp':lambda text: CODE(text,language='cpp').xml(),
         'code_html':lambda text: CODE(text,language='html').xml()}
 
 
+from uuid import uuid4
 
 def recorta_texto(texto=None,limite=24):
     if not isinstance(texto, str): return texto
     return texto[:limite]+'...' if len(texto)>limite else texto
 
-from uuid import uuid4
 
-dt = db.define_table
+class IS_NOT_SLUGGABLE(object):
+    def __init__(self, error_message='Dato inválido'):
+        self.e = error_message
+    def __call__(self, value):
+
+        sluggable = IS_SLUG.urlify(value)
+            
+        if sluggable.isdigit(): return (value, self.e)
+        return (str(value), None)
+        
+
+dt = db.define_table        
 
 dt('mcms_page',
    Field('mcms_uuid', default=str(uuid4()),
          readable=False, writable=False),
    Field('mcms_title', label='Título',
-         requires=IS_NOT_IN_DB(db,'mcms_page.mcms_title')),
-   Field('mcms_slug', 
-         compute=lambda r: IS_SLUG.urlify(r.mcms_title)),
+         requires=[IS_NOT_IN_DB(db,'mcms_page.mcms_title'), 
+                   IS_NOT_SLUGGABLE(error_message='Título inválido')]),
+   Field('mcms_slug', compute=lambda r: IS_SLUG.urlify(r.mcms_title)),
    Field('mcms_excerpt', 'string', length=140,
          label='Extracto'),
    Field('mcms_render', 'integer', readable=False,

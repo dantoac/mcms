@@ -54,7 +54,7 @@ def search():
               _placeholder='Buscar Artículo', _type='text',
               _onkeyup="ajax('%s', ['keyword'], 'search-result');" \
                % URL(f='callback.load'),
-              _tabindex=1),
+              _tabindex=0),
         _class='navbar-search pull-left'),
                 search_result=DIV(_id='search-result', 
                                   _class='pull-left'))
@@ -66,12 +66,12 @@ def callback():
     query = db.mcms_page.mcms_slug.startswith(keyword)
     pages = db(query).select(orderby=db.mcms_page.mcms_title,
                              cacheable=True)
+
     links = [A(p.mcms_title, _href=URL('index.html',args=p.mcms_slug)) 
              for p in pages] or [A(STRONG('Crear Artículo: '),
                                    keyword, _href=URL(f='new.html', 
                                                       vars={'title':keyword}))]
-    return UL(*links)
-
+    return UL(*links, _tabindex=1)
 
 
 @auth.requires_login()
@@ -132,9 +132,9 @@ def view():
 
     page = request.args(0)
 
-    try:
+    if page.isdigit():
         query = (db.mcms_page.id == int(page))
-    except:
+    else:
         page_slug = IS_SLUG.urlify(page)
         query = (db.mcms_page.mcms_slug == page_slug)
 
@@ -142,7 +142,7 @@ def view():
              ).select(db.mcms_page.ALL, cacheable=True)
 
     if not dataset: 
-        redirect(URL(f='new.html',vars={'title':str(page_title)}),
+        redirect(URL(f='new.html',vars={'title':str(page)}),
                  client_side=True)
 
     if not auth.is_logged_in() and not dataset.first()['mcms_page.mcms_public']: 

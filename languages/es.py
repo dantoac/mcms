@@ -422,6 +422,7 @@
 'Timestamp': 'Marca de tiempo',
 'Title': 'Title',
 'to  previous version.': 'a la versión previa.',
+'Traceback': 'Traceback',
 'translation strings for the application': 'cadenas de carácteres de traducción para la aplicación',
 'try': 'intente',
 'try something like': 'intente algo como',

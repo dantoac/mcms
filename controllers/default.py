@@ -83,7 +83,7 @@ def new():
 
     page = db.mcms_page(page_id)
 
-    if page.created_by != auth.user_id:
+    if page and page.created_by != auth.user_id:
         db.mcms_page.mcms_locked.readable = False
         db.mcms_page.mcms_locked.writable = False
 

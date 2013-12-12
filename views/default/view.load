@@ -2,7 +2,7 @@
   <h1 align="center">
     {{=title}}
   </h1>
-  <p class="lead">{{=excerpt}}</p>
+  <p class="lead text-center">{{=excerpt}}</p>
 </div>
 {{for d in dataset:}}
 

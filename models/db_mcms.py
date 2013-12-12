@@ -44,8 +44,10 @@ dt('mcms_page',
    Field('mcms_body', 'text', label='Cuerpo'),
    Field('mcms_html', compute=lambda r: MARKMIN(r.mcms_body, extra=extras) if r.mcms_render == 1 else XML(r.mcms_body, sanitize=True),
          readable=False),
-   Field('mcms_public','boolean', default=False, 
-         label='Público', comment='Si marcas este artículo como Público, será también legible para todo usuario anónimo'),
+   Field('mcms_public','boolean', default=False, label='Público', 
+         comment='Si marcas este artículo como Público, será también legible para todo usuario anónimo'),
+   Field('mcms_locked','boolean', default=False, label='Bloqueado',
+         comment='Si marcas la página como Bloqueada, sólo tú (el autor) podrás editarla'),
    auth.signature,
    format=lambda r: '%s (%s)' % (r.mcms_title, 'markmin' if r.mcms_render == 1 else 'html')
 )

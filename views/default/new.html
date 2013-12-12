@@ -3,7 +3,7 @@
 {{=A(TAG.i(_class='icon icon-arrow-left'),' Volver',
 _class='btn', _href=URL(f='index'))}}
 
-<h2 align="left">Nueva Página</h2>
+<h2 align="left">{{='Editando: "%s"' % page.mcms_title if request.args(0) else 'Nueva Página:'}}</h2>
 
 
 <div class="well">

@@ -75,39 +75,28 @@ def callback():
 
 
 @auth.requires_login()
-def edit():
-
-    page_id = request.args(0)
-
-    page = db.mcms_page(page_id) or redirect(URL(f='index'))
-        
-    form = SQLFORM(db.mcms_page, 
-                   page_id, 
-                   showid=False,
-                   deletable=True,
-    )
-
-
-    form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' 
-    onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
-    Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
-    
-    if form.process().accepted:
-
-        slug = IS_SLUG.urlify(form.vars.mcms_title)
-        
-        redirect(URL(f='index',args=slug))
-    
-    return locals()
-
-@auth.requires_login()
 def new():
 
     db.mcms_page.mcms_title.default = request.vars.title
+        
+    page_id = request.args(0)
 
-    form = SQLFORM(db.mcms_page)
+    page = db.mcms_page(page_id)
 
-    
+    if page.created_by != auth.user_id:
+        db.mcms_page.mcms_locked.readable = False
+        db.mcms_page.mcms_locked.writable = False
+
+        if page.mcms_locked: 
+            session.flash = 'La página está bloqueada. Sólo el autor puede editarla.'
+            redirect(URL(f='index',args=page.mcms_slug))
+
+    form = SQLFORM(db.mcms_page, 
+                   page_id,
+                   showid=False,
+                   deletable=True,
+                   submit_button='Guardar Cambios')
+
     form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' 
     onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
     Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
@@ -119,7 +108,7 @@ def new():
 
         redirect(URL(f='index',args=slug))
         
-    return {'form':form}
+    return {'form':form, 'page':page}
 
 
 

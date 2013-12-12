@@ -22,6 +22,10 @@
     {{else:}}
     <span class="label label-important">Privado</span>
     {{pass}}
+
+    {{if d.mcms_locked:}}
+    <span class="label label-warning">Bloqueado</span>
+    {{pass}}
     
   </div>
 
@@ -34,9 +38,13 @@
       Permalink
     </a>
 
-    
-    {{=A('Editar', _href=URL(f='edit.html',args=d.id), target=request.cid, _class='btn btn-danger btn-mini')}}
-    
+    {{if d.mcms_locked:}}
+    {{if d.created_by == auth.user_id:}}
+    {{=A('Editar', _href=URL(f='new.html',args=d.id), target=request.cid, _class='btn btn-danger btn-mini')}}
+    {{pass}}
+    {{else:}}
+    {{=A('Editar', _href=URL(f='new.html',args=d.id), target=request.cid, _class='btn btn-danger btn-mini')}}
+    {{pass}}
 
   </div>
 

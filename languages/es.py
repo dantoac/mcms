@@ -342,6 +342,8 @@
 'previous 100 rows': '100 filas anteriores',
 'Profile': 'Perfil',
 'Profile updated': 'Perfil actualizado',
+'Publicar': 'Publicar',
+'Publicar Artículo': 'Publicar Artículo',
 'Python': 'Python',
 'Query:': 'Consulta:',
 'Quick Examples': 'Ejemplos Rápidos',

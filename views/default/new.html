@@ -5,7 +5,11 @@ _class='btn', _href=URL(f='index'))}}
 
 <h2 align="left">{{='Editando: "%s"' % page.mcms_title if request.args(0) else 'Nueva Página:'}}</h2>
 
+<div id="saved" class="hide alert alert-success">
+  <button type="button" class="close" onclick="$('#saved').slideUp();">&times;</button>
+  <div id="saved-message" class="saved-message"></div>
 
+</div>
 <div class="well">
 {{=form}}
 </div>

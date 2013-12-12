@@ -95,11 +95,18 @@ def new():
                    page_id,
                    showid=False,
                    deletable=True,
-                   submit_button='Guardar Cambios')
+                   submit_button='Publicar Artículo')
 
-    form[0][-1][1].append(XML('''<a href="#preview" class='btn btn-primary' 
+    form[0][3][1].append(XML('''
+    <div class="btn-group pull-right">
+    <a href="#preview" class='btn btn-mini btn-primary' 
     onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
-    Previsualizar</a>''' % URL(f='preview',vars=request.vars)))
+    Previsualizar</a>
+    <a class='btn btn-mini btn-success' 
+    onclick='$("input[name=mcms_locked]").attr("checked", true);
+    ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],":eval");'>
+    Salvar contenido</a></div>''' % (URL(f='preview',vars=request.vars),
+                      URL(f='save', args=request.args(0), vars=request.post_vars))))
 
 
     if form.process().accepted:
@@ -110,6 +117,24 @@ def new():
         
     return {'form':form, 'page':page}
 
+
+
+def save():
+    id = request.args(0)
+    body = request.post_vars.mcms_body
+    render = request.post_vars.mcms_render
+    request.post_vars.mcms_locked = True
+
+    if render == '1':
+        request.post_vars.mcms_html = MARKMIN(body)
+    elif render == '2':
+        request.post_vars.mcms_html = XML(body, sanitize=True)
+
+    db.mcms_page.update_or_insert(db.mcms_page.id == id,
+                                  **db.mcms_page._filter_fields(request.post_vars))
+    message = '<strong>Página Salvada (%s)</strong>' % request.now.now()
+    response.flash = 'El mensaje está bloqueado temporalmente para evitar la edición por otros usuarios.'
+    return '$("#saved").slideDown(); $("#saved-message").addClass("saved-message").html("%s")' % message
 
 
 def view():

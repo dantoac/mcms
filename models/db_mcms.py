@@ -60,7 +60,6 @@ dt('mcms_tag',
 )
 
 dt('mcms_media',
-   Field('mcms_page_id', 'reference mcms_page'),
    Field('mcms_name'),
    Field('mcms_file', 'upload'),
    auth.signature,

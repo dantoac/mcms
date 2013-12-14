@@ -41,7 +41,7 @@ def index():
         if auth.is_logged_in():
             query = (db.mcms_page.id>0)
         else:
-            query = (db.mcms_page.mcms_public == True)
+            query = (db.mcms_page.mcms_access == 1)
 
         dataset = db(query).select(orderby=~db.mcms_page.created_on)
 
@@ -170,16 +170,17 @@ def view():
         redirect(URL(f='new.html',vars={'title':str(page)}),
                  client_side=True)
 
-    if not auth.is_logged_in() and not dataset.first()['mcms_page.mcms_public']: 
-        raise HTTP(404)
+    if not auth.is_logged_in() and not dataset.first()['mcms_page.mcms_access'] == 1: 
+        raise HTTP(403)
 
-    tags = db((query)& (db.mcms_page.id == db.mcms_tag.mcms_page)
-          ).select(db.mcms_tag.page_tag)
+    #tags = db((query)& (db.mcms_page.id == db.mcms_tag.mcms_page)
+    #      ).select(db.mcms_tag.page_tag)
 
     title = dataset.first()['mcms_page.mcms_title']
     excerpt = dataset.first()['mcms_page.mcms_excerpt']
     slug = dataset.first()['mcms_page.mcms_slug']
     id = dataset.first()['mcms_page.id']
+    
     response.title = title
     
     return locals()

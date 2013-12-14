@@ -17,9 +17,9 @@
   
   <div class="text-left">
     
-    {{if d.mcms_public:}}
+    {{if d.mcms_access == 1:}}
     <span class="label label-success">Público</span>
-    {{else:}}
+    {{elif d.mcms_access == 3:}}
     <span class="label label-important">Privado</span>
     {{pass}}
 

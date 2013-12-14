@@ -33,7 +33,7 @@
 
       
       <div class="blog-meta text-left">
-	{{if auth.is_logged_in() and not d.mcms_public:}}
+	{{if auth.is_logged_in() and not d.mcms_access == 1:}}
 	<span class="label label-important">Privado</span>
 	{{pass}}
 	<!--

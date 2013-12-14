@@ -42,10 +42,15 @@ dt('mcms_page',
          label='Interpretación',
          requires=IS_IN_SET([(1,'markmin'),(2,'html')]), default=1),
    Field('mcms_body', 'text', label='Cuerpo'),
-   Field('mcms_html', compute=lambda r: MARKMIN(r.mcms_body, extra=extras) if r.mcms_render == 1 else XML(r.mcms_body, sanitize=True),
-         readable=False),
-   Field('mcms_public','boolean', default=False, label='Público', 
-         comment='Si marcas este artículo como Público, será también legible para todo usuario anónimo'),
+   Field('mcms_html', compute=lambda r: MARKMIN(r.mcms_body, extra=extras) if r.mcms_render == 1 else XML(r.mcms_body, sanitize=True),readable=False),
+   #Field('mcms_public','boolean', default=False, label='Público', 
+   #      comment='Si marcas este artículo como Público, será también legible para todo usuario anónimo'),
+   Field('mcms_access', 'integer', default=1,
+         label='Acceso a esta página',
+         requires=IS_IN_SET((1,2,3),
+                            ['Público','Sólo Registrados','Privado (pronto!)'],
+                            zero='Seleccione...'
+                        )),
    Field('mcms_locked','boolean', default=False, label='Bloqueado',
          comment='Si marcas la página como Bloqueada, sólo tú (el autor) podrás editarla'),
    auth.signature,
@@ -53,6 +58,13 @@ dt('mcms_page',
 )
 
 db.mcms_page._enable_record_versioning()
+
+dt('mcms_page_access',
+   Field('mcms_page', 'reference mcms_page'),
+   Field('mcms_user', 'reference auth_user',
+         label='Usuario con acceso'),
+)
+
 
 dt('mcms_tag',
    Field('mcms_page', 'reference mcms_page'),

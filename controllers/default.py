@@ -97,16 +97,27 @@ def new():
                    deletable=True,
                    submit_button='Publicar Artículo')
 
-    form[0][3][1].append(XML('''
-    <div class="btn-group pull-right">
-    <a href="#preview" class='btn btn-mini btn-primary' 
+    
+    body_buttons = []
+
+    if request.args(0):
+
+        btn_save = '''<a class='btn btn-mini btn-success' 
+        onclick='$("input[name=mcms_locked]").attr("checked", true);
+        ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],":eval");'>
+        Salvar contenido</a>''' % URL(f='save', args=request.args(0), 
+                                      vars=request.post_vars)
+
+        
+        body_buttons.append(XML(btn_save))
+
+    btn_preview = '''<a href="#preview" class='btn btn-mini btn-primary' 
     onclick='ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],"preview");'>
-    Previsualizar</a>
-    <a class='btn btn-mini btn-success' 
-    onclick='$("input[name=mcms_locked]").attr("checked", true);
-    ajax("%s", ["mcms_title","mcms_excerpt","mcms_body","mcms_render"],":eval");'>
-    Salvar contenido</a></div>''' % (URL(f='preview',vars=request.vars),
-                      URL(f='save', args=request.args(0), vars=request.post_vars))))
+    Previsualizar</a>''' % URL(f='preview', vars=request.vars)
+
+    body_buttons.append(XML(btn_preview))
+
+    form[0][3][1].append(DIV(body_buttons, _class='btn-group pull-right'))
 
 
     if form.process().accepted:

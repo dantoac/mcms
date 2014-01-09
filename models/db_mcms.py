@@ -2,6 +2,7 @@
 
 auth.settings.create_user_groups = None
 
+import os
 
 extras={'code_cpp':lambda text: CODE(text,language='cpp').xml(),
         'code_java':lambda text: CODE(text,language='java').xml(),
@@ -43,8 +44,6 @@ dt('mcms_page',
          requires=IS_IN_SET([(1,'markmin'),(2,'html')]), default=1),
    Field('mcms_body', 'text', label='Cuerpo'),
    Field('mcms_html', compute=lambda r: MARKMIN(r.mcms_body, extra=extras) if r.mcms_render == 1 else XML(r.mcms_body, sanitize=True),readable=False),
-   #Field('mcms_public','boolean', default=False, label='Público', 
-   #      comment='Si marcas este artículo como Público, será también legible para todo usuario anónimo'),
    Field('mcms_locked','boolean', default=False, label='Bloqueado',
          comment='Si marcas la página como Bloqueada, sólo tú (el autor) podrás editarla'),
    Field('mcms_access', 'integer', default=2,
@@ -73,6 +72,10 @@ dt('mcms_tag',
 
 dt('mcms_media',
    Field('mcms_name'),
-   Field('mcms_file', 'upload'),
+   Field('mcms_file', 'upload', 
+         uploadfolder=os.path.join(request.folder,'static/uploads'),
+         represent = lambda v,r: A(IMG(_src=URL(c='static',f='uploads',args=v),
+                                       _style='width:6em;height:6em;'), 
+                                   _href=URL(c='static',f='uploads',args=v))),
    auth.signature,
 )

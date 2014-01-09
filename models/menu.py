@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('NIM',SPAN('.IO')), _class="brand")
-response.title = request.application.replace('_',' ').title()
+response.title = 'NIMIO Technologies Chile %s' % request.application.replace('_',' ').title()
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html

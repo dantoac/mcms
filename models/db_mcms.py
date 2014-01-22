@@ -75,7 +75,7 @@ dt('mcms_media',
    Field('mcms_file', 'upload', 
          uploadfolder=os.path.join(request.folder,'static/uploads'),
          represent = lambda v,r: A(IMG(_src=URL(c='static',f='uploads',args=v),
-                                       _style='width:6em;height:6em;'), 
+                                       _style='max-width:6em;height:6em;'), 
                                    _href=URL(c='static',f='uploads',args=v))),
    auth.signature,
 )

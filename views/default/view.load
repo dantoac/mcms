@@ -33,7 +33,7 @@
   <div class="text-right">
         
     <a class="btn btn-mini"
-       href="/{{=request.application}}/{{=request.controller}}/view/{{=d.id}}">
+       href="/{{=request.application}}/{{=request.controller}}/index/{{=d.id}}">
       <i class="icon-eye-open"></i>
       Permalink
     </a>

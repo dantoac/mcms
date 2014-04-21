@@ -26,7 +26,7 @@
     <div class="blog-post-title">
       <h1>
 	<small class="">{{=d.created_on.date()}}</small>
-	<a name="{{=d.mcms_slug}}" href="{{=URL(c='default',f='index', args=[d.id, d.mcms_slug])}}">
+	<a name="{{=d.mcms_slug}}" href="{{=URL(c='default',f='index', args=d.mcms_slug)}}">
 	  {{=d.mcms_title}}
 	</a>
       </h1>
@@ -59,7 +59,7 @@
       {{=TAG(recorta_texto(d.mcms_html,357)).flatten()}}
       
       <div class="text-right">
-      <a class="btn" href="{{=URL(f='index', args=[d.id, d.mcms_slug])}}">Sigue leyendo <i class="icon-arrow-right"></i></a>
+      <a class="btn" href="{{=URL(f='index', args=d.mcms_slug)}}">Sigue leyendo <i class="icon-arrow-right"></i></a>
       </div>
     </div>
 
